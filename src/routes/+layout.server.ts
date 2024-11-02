@@ -14,18 +14,9 @@ export const load: LayoutServerLoad = async ({ url, cookies }) => {
 		throw redirect(302, 'login');
 	}
 
-	if (tokenCookie) {
+	if (tokenCookie && url.pathname !== '/dashboard') {
 		// redirect to home page
-		const response = await fetch('http://localhost:8080/api/v1/user/me', {
-			headers: {
-				Authorization: tokenCookie
-			}
-		});
-		const userData = await response.json();
-		return {
-			user: userData
-		};
+		throw redirect(302, 'dashboard');
 	}
-	console.log('TOKEN COOKIE', cookies.get('token'));
 	return {};
 };
