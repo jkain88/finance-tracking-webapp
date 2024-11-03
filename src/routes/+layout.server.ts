@@ -14,7 +14,7 @@ export const load: LayoutServerLoad = async ({ url, cookies }) => {
 		throw redirect(302, 'login');
 	}
 
-	if (tokenCookie && url.pathname !== '/dashboard') {
+	if (tokenCookie && !url.pathname.includes('dashboard')) {
 		// redirect to home page
 		throw redirect(302, 'dashboard');
 	}
